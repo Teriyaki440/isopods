@@ -7,24 +7,14 @@ public class IsopodManagerScript : MonoBehaviour
     public Transform target;
     public GameObject prefab;
 
-    // Start is called before the first frame update
-    void Start()
+    public void CreateIsopods(Isopod isopod)
     {
-        
-    }
+        var copy = Instantiate(isopod, new Vector3(-1.45f, -0.19f, 0), Quaternion.identity);
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            var isopod = Instantiate(prefab, new Vector3(-1.45f, -0.19f, 0), Quaternion.identity);
+        copy.target = target;
 
-            isopod.GetComponent<Isopod>().target = target;
-
-            var spawn = Random.onUnitSphere * 2.5f;
-            spawn.z = 0;
-            isopod.transform.position = spawn;
-        }
+        var spawn = Random.onUnitSphere * 2.5f;
+        spawn.z = 0;
+        copy.transform.position = spawn;
     }
 }
