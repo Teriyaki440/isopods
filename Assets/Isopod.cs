@@ -7,29 +7,26 @@ public class Isopod : MonoBehaviour
     public Transform target;
     public float speed = 1f;
 
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(Move());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    private IEnumerator Move()
-    {
-        Debug.Log("Hi");
+    bool reached;
         
-        while(Vector3.Distance(transform.position, target.position) > 0.1f)
-        {
-            transform.position = (target.position - transform.position).normalized * Time.deltaTime * speed + transform.position;
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (reached) return;
+        GetComponent<Rigidbody2D>().MovePosition((target.position - transform.position).normalized * Time.deltaTime * speed + transform.position);
 
-            yield return null;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Enter " + collision.gameObject.name);
+
+        if (collision.transform == target)
+        {
+            reached = true;
         }
     }
+
 
 }
